@@ -13,3 +13,13 @@ after_success:
   - docker build -t tapanmjo528/multi-nginx ./nginx
   - docker build -t tapanmjo528/multi-server ./server
   - docker build -t tapanmjo528/multi-worker ./worker
+
+  # Login to Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # Take image and push to docker hub
+  - docker push tapanmjo528/multi-client
+  - docker push tapanmjo528/multi-nginx
+  - docker push tapanmjo528/multi-server
+  - docker push tapanmjo528/multi-worker
+
