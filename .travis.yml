@@ -1,0 +1,15 @@
+sudo: required
+services: 
+  - docker
+
+before_install:
+  - docker build -t tapanmjo528/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true tapanmjo528/react-test npm test
+
+after_success:
+  - docker build -t tapanmjo528/multi-client ./client
+  - docker build -t tapanmjo528/multi-nginx ./nginx
+  - docker build -t tapanmjo528/multi-server ./server
+  - docker build -t tapanmjo528/multi-worker ./worker
